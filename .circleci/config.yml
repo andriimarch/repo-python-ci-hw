@@ -28,5 +28,5 @@ jobs:
 workflows:
   build-and-test:
     jobs:
-      - python-jobs
+      - python-job
 
