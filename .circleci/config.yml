@@ -7,20 +7,18 @@ jobs:
     steps:
       - checkout
       - run:
-          name: set up venv
-          command: |
-            python -m venv venv
-            . venv/bin/activate
+          name: Create virtual environment
+          command: python -m venv venv
       - run:
-          name: install dependencies
+          name: Install dependencies from requirements.txt
           command: |
-            . venv/bin/activate
-            pip install -r requirements.txt
+            ./venv/bin/pip install --upgrade pip
+            ./venv/bin/pip install -r requirements.txt
+            ./venv/bin/pip install pytest pytest-html requests
+            
       - run:
-          name: run tests
-          command: |
-            . venv/bin/activate
-            pytest --template=html1/index.html --report=report.html
+          name: Run tests with HTML report
+          command: ./venv/bin/pytest --html=report.html --self-contained-html
       - store_artifacts:
           path: report.html
           destination: python-report
@@ -29,4 +27,3 @@ workflows:
   build-and-test:
     jobs:
       - python-job
-
